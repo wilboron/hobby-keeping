@@ -22,4 +22,10 @@ class AuthorService(
         return repository.save(author)
     }
 
+    fun update(id: Long, authorUpdate: Author): Author {
+        val author = repository.findByIdOrNull(id) ?: throw NotFoundException("Author", id)
+        author.name = authorUpdate.name
+        repository.save(author)
+        return author
+    }
 }

@@ -50,7 +50,13 @@ class AuthorController(
     // PATCH /authors/1
     @PatchMapping("/{id}")
     @Transactional
-    fun update(@PathVariable id: Long) = id
+    fun update(
+        @PathVariable id: Long,
+        @RequestBody @Valid updateRequest: CreateAuthorRequest
+    ): AuthorResponse {
+        val author = createAuthorRequestMapper.map(updateRequest)
+        return authorResponseMapper.map(service.update(id, author))
+    }
 
     // DELETE /authors/1
     @DeleteMapping
