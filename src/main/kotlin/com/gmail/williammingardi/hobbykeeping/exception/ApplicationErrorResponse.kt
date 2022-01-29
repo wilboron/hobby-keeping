@@ -10,3 +10,12 @@ data class ApplicationErrorResponse(
     val path: String,
     val method: String
 )
+
+data class ApplicationErrorDictResponse(
+    val timestamp: LocalDateTime = LocalDateTime.now(),
+    val status: Int,
+    val error: String,
+    val message: Map<String, Any>,
+    val path: String,
+    val method: String
+)

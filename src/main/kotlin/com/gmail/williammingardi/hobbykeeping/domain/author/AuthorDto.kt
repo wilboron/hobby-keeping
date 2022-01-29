@@ -1,6 +1,7 @@
 package com.gmail.williammingardi.hobbykeeping.domain.author
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.hibernate.validator.constraints.Length
 import java.time.OffsetDateTime
 import javax.validation.constraints.Size
 
@@ -14,6 +15,6 @@ data class AuthorResponse(
 )
 
 data class CreateAuthorRequest(
-    @field:Size(min = 2, max = 255)
+    @field:Length(min = 2, max = 255)
     val name: String?,
 )

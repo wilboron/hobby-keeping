@@ -16,6 +16,9 @@ class Book(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
+    @Column(name = "name", nullable = false)
+    var name: String? = null,
+
     @Column(name = "num_pages", nullable = false)
     var numPages: Long? = null,
 

@@ -32,15 +32,12 @@ class ExceptionHandler {
     fun handleValidationError(
         exception: MethodArgumentNotValidException,
         request: HttpServletRequest
-    ): ApplicationErrorResponse {
-        val errorMessage =
-            exception.bindingResult.fieldErrors.associateBy(
-                { it.field }, { it.defaultMessage }
-            )
-        return ApplicationErrorResponse(
+    ): ApplicationErrorDictResponse {
+        val errorFields = buildBadRequestInBodyMessage(exception)
+        return ApplicationErrorDictResponse(
             status = HttpStatus.BAD_REQUEST.value(),
             error = HttpStatus.BAD_REQUEST.name,
-            message = errorMessage.toString(),
+            message = errorFields,
             path = request.servletPath,
             method = request.method
         )
@@ -54,7 +51,7 @@ class ExceptionHandler {
     ): ApplicationErrorResponse {
         val message =
             """
-                Param '${exception.name}' must be type ${exception.requiredType}. 
+                Param '${exception.name}' must be type ${exception.requiredType}.
                 Got '${exception.value}'
             """.trimIndent().replace("\n", "")
         return ApplicationErrorResponse(
@@ -78,6 +75,23 @@ class ExceptionHandler {
             message = "Class: ${exception.javaClass.name} Error: ${exception.message}",
             path = request.servletPath,
             method = request.method
+        )
+    }
+
+    private fun buildBadRequestInBodyMessage(
+        exception: MethodArgumentNotValidException
+    ): Map<String, Any> {
+        val fieldsError =
+            exception.bindingResult.fieldErrors.associateBy(
+                { it.field }, { it.defaultMessage }
+            )
+
+        val globalErrorMessage =
+            exception.bindingResult.globalErrors.map { it.defaultMessage }
+
+        return mapOf(
+            "field" to fieldsError,
+            "global" to globalErrorMessage
         )
     }
 }
