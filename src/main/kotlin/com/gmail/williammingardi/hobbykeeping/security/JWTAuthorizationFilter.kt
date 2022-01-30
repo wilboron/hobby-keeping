@@ -39,7 +39,7 @@ class JWTAuthorizationFilter(
             val user = userDetailService.loadUserByUsername(username)
             return UsernamePasswordAuthenticationToken(user, null, user.authorities)
         }
-        throw UsernameNotFoundException("Auth invalid!")
+        throw UsernameNotFoundException("Invalid Token! (expired?)")
     }
 
 }

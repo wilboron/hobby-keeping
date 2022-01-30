@@ -26,7 +26,7 @@ class JWTAuthenticationFilter(
             val token = UsernamePasswordAuthenticationToken(email, password)
             return authManager.authenticate(token)
         } catch (e: Exception) {
-            throw UsernameNotFoundException("")
+            throw UsernameNotFoundException("Could not log in, invalid credentials!")
         }
     }
 
