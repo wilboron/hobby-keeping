@@ -19,5 +19,5 @@ spring:
 
 jwt:
   secret: "xO5E6vPqB0d8eC4jnavI3OHOHgbqQkwlOkYrhVoAm1Xnm8T9sdlVsfcMerFsLU6uY17tcUlH/IILjGo2DHr9O0ggAE52UvG4YZVhhcIANDeMBUhHV4+tEx4PT9NkxdiYJXyP3nJzZGJ9ElfwerhXdmJwXxXGn01YXt135jGjGryEGWIPxHARXUCIqMyzxSPFIPiJ+4jyYdQ+AeONkSDZ2P3CoXsQ37ZCQhUjTA=="
-#  token-expiration-minutes: 30
+  token-expiration-minutes: 30
 

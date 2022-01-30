@@ -1,5 +1,6 @@
 package com.gmail.williammingardi.hobbykeeping.security
 
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
@@ -13,7 +14,11 @@ class JWTUtil {
     @Value("\${jwt.secret}")
     private lateinit var secret: String
 
-    private val expiration: Long = 60000
+    @Value("\${jwt.token-expiration-minutes}")
+    private lateinit var minutesToExpire: String
+
+    private val minutesInMilliseconds = 60000L
+    private val expiration get() = minutesInMilliseconds * minutesToExpire.toLong()
 
     fun generateToken(username: String): String {
         return Jwts.builder()
@@ -22,4 +27,31 @@ class JWTUtil {
             .signWith(SignatureAlgorithm.HS512, secret.toByteArray())
             .compact()
     }
+
+    fun isTokenValid(token: String): Boolean {
+        val claims = getClaimsToken(token)
+        if (claims != null) {
+            val username = claims.subject
+            val expirationDate = claims.expiration
+            val now = Date(System.currentTimeMillis())
+            if (username != null && expirationDate != null && now.before(expirationDate)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun getClaimsToken(token: String): Claims? {
+        return try {
+            Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(token).body
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun getUserName(token: String): String? {
+        val claims = getClaimsToken(token)
+        return claims?.subject
+    }
+
 }

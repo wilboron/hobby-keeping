@@ -1,6 +1,7 @@
 package com.gmail.williammingardi.hobbykeeping.config
 
 import com.gmail.williammingardi.hobbykeeping.security.JWTAuthenticationFilter
+import com.gmail.williammingardi.hobbykeeping.security.JWTAuthorizationFilter
 import com.gmail.williammingardi.hobbykeeping.security.JWTUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -29,6 +30,13 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
             .antMatchers(HttpMethod.POST, "/users").permitAll()
             .anyRequest().authenticated()
         http.addFilter(JWTAuthenticationFilter(authenticationManager(), jwtUtil = jwtUtil))
+        http.addFilter(
+            JWTAuthorizationFilter(
+                authenticationManager(),
+                jwtUtil = jwtUtil,
+                userDetailService = userDetailsService
+            )
+        )
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
