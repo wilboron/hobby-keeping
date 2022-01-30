@@ -28,4 +28,15 @@ class UserService(
         repository.save(user)
         return user
     }
+
+    fun existsByEmail(email: String): Boolean {
+        return repository.existsByEmail(email)
+    }
+
+    fun existsByUsername(username: String): Boolean {
+        return repository.existsByUsername(username)
+    }
+
+
+
 }
