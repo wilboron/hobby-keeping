@@ -9,6 +9,6 @@ import java.util.*
 class HobbyKeepingApplication
 
 fun main(args: Array<String>) {
-    TimeZone.setDefault(TimeZone.getTimeZone(ZoneOffset.UTC.id));
+    TimeZone.setDefault(TimeZone.getTimeZone(ZoneOffset.UTC.id))
     runApplication<HobbyKeepingApplication>(*args)
 }

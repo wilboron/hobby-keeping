@@ -28,4 +28,8 @@ class AuthorService(
         repository.save(author)
         return author
     }
+
+    fun deleteAll() {
+        repository.deleteAll()
+    }
 }

@@ -47,5 +47,8 @@ class UserService(
         return UserDetail(user)
     }
 
+    fun deleteAll() {
+        repository.deleteAll()
+    }
 
 }

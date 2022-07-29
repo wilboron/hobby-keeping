@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Length
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import javax.validation.constraints.Min
-import javax.validation.constraints.Size
 
 data class BookResponse(
     val id: Long?,
@@ -13,7 +12,7 @@ data class BookResponse(
     @JsonProperty("author_name")
     val authorName: String?,
     @JsonProperty("num_pages")
-    val numPages: Long?,
+    val numPages: Int?,
     val genre: String?,
     val serie: String?,
     @JsonProperty("publish_date")
@@ -29,7 +28,7 @@ data class CreateBookRequest(
     val name: String?,
     @JsonProperty("num_pages")
     @field:Min(1)
-    val numPages: Long?,
+    val numPages: Int?,
     @field:Length(min = 2, max = 255)
     val genre: String?,
     val serie: String?,

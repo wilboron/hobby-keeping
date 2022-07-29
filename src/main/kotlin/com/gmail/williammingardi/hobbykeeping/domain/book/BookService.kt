@@ -23,9 +23,13 @@ class BookService(
     }
 
     fun update(id: Long, bookUpdate: Book): Book {
-        val author = repository.findByIdOrNull(id) ?: throw NotFoundException("Book", id)
-        author.genre = bookUpdate.genre
-        repository.save(author)
-        return author
+        val book = repository.findByIdOrNull(id) ?: throw NotFoundException("Book", id)
+        book.genre = bookUpdate.genre
+        repository.save(book)
+        return book
+    }
+
+    fun deleteAll() {
+        repository.deleteAll()
     }
 }

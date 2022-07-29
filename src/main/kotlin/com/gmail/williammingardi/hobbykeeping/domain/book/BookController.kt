@@ -1,8 +1,10 @@
 package com.gmail.williammingardi.hobbykeeping.domain.book
 
 import com.gmail.williammingardi.hobbykeeping.domain.author.CreateAuthorRequestMapper
+import org.springdoc.api.annotations.ParameterObject
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
@@ -20,7 +22,7 @@ class BookController(
     // GET /books
     @GetMapping
     fun index(
-        pagination: Pageable
+        @ParameterObject pagination: Pageable
     ): Page<BookResponse> {
         return service.findAll(pagination).map { book ->
             bookResponseMapper.map(book)
@@ -38,6 +40,7 @@ class BookController(
     // POST /books
     @PostMapping
     @Transactional
+    @ResponseStatus(HttpStatus.CREATED)
     fun create(
         @RequestBody @Valid createRequest: CreateBookRequest,
         uriBuilder: UriComponentsBuilder

@@ -1,7 +1,13 @@
 package com.gmail.williammingardi.hobbykeeping.domain.user
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import org.springdoc.api.annotations.ParameterObject
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
@@ -17,9 +23,10 @@ class UserController(
 ) {
 
     // GET /users
+    @Operation(summary = "Return all users in database")
     @GetMapping
     fun index(
-        pagination: Pageable
+        @ParameterObject pagination: Pageable
     ): Page<UserResponse> {
         return service.findAll(pagination).map { user ->
             userResponseMapper.map(user)
@@ -27,6 +34,17 @@ class UserController(
     }
 
     // GET /users/1
+    @Operation(summary = "Find user with {id} in database")
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Found the user",
+                content = [Content(mediaType = "application/json")]
+            ),
+            ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+            ApiResponse(responseCode = "404", description = "User not found")]
+    )
     @GetMapping("/{id}")
     fun show(@PathVariable id: Long): UserResponse {
         return userResponseMapper.map(
@@ -37,6 +55,7 @@ class UserController(
     // POST /users
     @PostMapping
     @Transactional
+    @ResponseStatus(HttpStatus.CREATED)
     fun create(
         @RequestBody @Valid createRequest: CreateUserRequest,
         uriBuilder: UriComponentsBuilder

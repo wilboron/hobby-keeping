@@ -20,7 +20,7 @@ class Book(
     var name: String? = null,
 
     @Column(name = "num_pages", nullable = false)
-    var numPages: Long? = null,
+    var numPages: Int? = null,
 
     @Column(name = "genre", nullable = false)
     var genre: String? = null,

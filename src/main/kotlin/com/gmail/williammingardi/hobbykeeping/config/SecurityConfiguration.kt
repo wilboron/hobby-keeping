@@ -28,15 +28,16 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http.csrf().disable().authorizeRequests()
             .antMatchers(HttpMethod.POST, "/users").permitAll()
-            .anyRequest().authenticated()
-        http.addFilter(JWTAuthenticationFilter(authenticationManager(), jwtUtil = jwtUtil))
-        http.addFilter(
-            JWTAuthorizationFilter(
-                authenticationManager(),
-                jwtUtil = jwtUtil,
-                userDetailService = userDetailsService
-            )
-        )
+            .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+            .anyRequest().permitAll()
+//        http.addFilter(JWTAuthenticationFilter(authenticationManager(), jwtUtil = jwtUtil))
+//        http.addFilter(
+//            JWTAuthorizationFilter(
+//                authenticationManager(),
+//                jwtUtil = jwtUtil,
+//                userDetailService = userDetailsService
+//            )
+//        )
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
