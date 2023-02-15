@@ -1,5 +1,6 @@
 package com.gmail.williammingardi.hobbykeeping.domain.author
 
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springdoc.api.annotations.ParameterObject
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 import javax.validation.Valid
 
+@Tag(name = "Author", description = "Manage authors")
 @RestController
 @RequestMapping("/authors")
 class AuthorController(

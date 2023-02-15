@@ -1,6 +1,7 @@
 package com.gmail.williammingardi.hobbykeeping.domain.book
 
 import com.gmail.williammingardi.hobbykeeping.domain.author.CreateAuthorRequestMapper
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springdoc.api.annotations.ParameterObject
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 import javax.validation.Valid
 
+@Tag(name = "Book", description = "Manage books")
 @RestController
 @RequestMapping("/books")
 class BookController(

@@ -9,6 +9,7 @@ import com.gmail.williammingardi.hobbykeeping.domain.read.Read
 import com.gmail.williammingardi.hobbykeeping.domain.read.ReadService
 import com.gmail.williammingardi.hobbykeeping.domain.user.User
 import com.gmail.williammingardi.hobbykeeping.domain.user.UserService
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,6 +19,7 @@ import java.time.ZoneId
 import java.util.concurrent.TimeUnit
 import javax.transaction.Transactional
 
+@Tag(name = "Populate DB", description = "Populate DB for testing")
 @RestController
 @RequestMapping("/seed")
 class PopulateDBController(
